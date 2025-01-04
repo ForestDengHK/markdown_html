@@ -8,21 +8,23 @@ from pathlib import Path
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads'  # Use /tmp for Cloudflare
+app.config['ENV'] = 'production'
+app.config['DEBUG'] = False
 
 # Initialize MarkItDown instance
 md_converter = MarkItDown()
 
 # Set up logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Ensure upload folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
-
-# For Vercel deployment
-app.debug = False
 
 def convert_file(file_obj, filename):
     """Convert a file to markdown with proper error handling."""
@@ -38,10 +40,7 @@ def convert_file(file_obj, filename):
             f.write(content)
         
         file_size = len(content)
-        logger.debug(f"Converting file: {filename}, size: {file_size} bytes")
-        
-        # Get file extension
-        ext = Path(filename).suffix.lower()
+        logger.info(f"Converting file: {filename}, size: {file_size} bytes")
         
         # Convert using markitdown
         result = md_converter.convert(temp_path)
@@ -65,6 +64,13 @@ def convert_file(file_obj, filename):
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)
         raise
+    finally:
+        # Ensure cleanup in all cases
+        try:
+            if temp_path and os.path.exists(temp_path):
+                os.remove(temp_path)
+        except:
+            pass
 
 @app.route('/')
 def home():
@@ -84,9 +90,8 @@ def convert():
         if len(uploaded_files) == 1:
             file_ = uploaded_files[0]
             try:
-                # Convert file directly from stream
                 md_content = convert_file(file_, file_.filename)
-                logger.debug(f"File converted successfully: {len(md_content)} bytes")
+                logger.info(f"File converted successfully: {len(md_content)} bytes")
                 
                 md_filename = file_.filename.rsplit('.', 1)[0] + ".md"
                 return send_file(
@@ -104,9 +109,8 @@ def convert():
             with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as z:
                 for file_ in uploaded_files:
                     try:
-                        # Convert file directly from stream
                         md_content = convert_file(file_, file_.filename)
-                        logger.debug(f"File converted successfully: {len(md_content)} bytes")
+                        logger.info(f"File converted successfully: {len(md_content)} bytes")
                         
                         md_filename = file_.filename.rsplit('.', 1)[0] + ".md"
                         z.writestr(md_filename, md_content.encode('utf-8'))
@@ -137,4 +141,6 @@ def about():
     return render_template('about.html', active_page='about')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Only for local development
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port)

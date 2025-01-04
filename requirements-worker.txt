@@ -1,4 +1,0 @@
-Flask==3.0.0
-markitdown==0.0.1a3
-Werkzeug==3.0.1
-cffi==1.15.1 
