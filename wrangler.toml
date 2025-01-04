@@ -1,5 +1,2 @@
 name = "markdown-converter"
-compatibility_date = "2024-01-04"
-
-[site]
-bucket = "./static" 
+compatibility_date = "2024-01-04" 

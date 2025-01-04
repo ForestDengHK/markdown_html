@@ -1,12 +1,13 @@
 from flask import Flask, Request
 from app import app as flask_app
 
-def handle(request, context):
+def onRequest(context):
     """
-    Handle incoming request and route to Flask application
+    Entry point for Cloudflare Pages Functions
     """
     try:
         # Get request data
+        request = context.get('request', {})
         method = request.get('method', 'GET')
         headers = dict(request.get('headers', {}))
         url = request.get('url', '')
