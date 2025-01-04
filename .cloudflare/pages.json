@@ -1,13 +1,5 @@
 {
   "functions": {
-    "api/*.py": {
-      "runtime": "python-3.11"
-    }
-  },
-  "routes": [
-    {
-      "pattern": "/*",
-      "function": "api/index.py"
-    }
-  ]
+    "functions/*": {}
+  }
 } 
