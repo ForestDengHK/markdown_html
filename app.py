@@ -1,10 +1,14 @@
-from flask import Flask, render_template, request, send_file, send_from_directory, make_response
+from flask import Flask, render_template, request, send_file
 import io
 import zipfile
 from markitdown import MarkItDown
 import os
 import logging
 from pathlib import Path
+
+# Create static/images directory if it doesn't exist
+if not os.path.exists('static/images'):
+    os.makedirs('static/images')
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
@@ -144,22 +148,23 @@ def about():
 
 @app.route('/robots.txt')
 def robots():
-    response = make_response(send_file('robots.txt'))
-    response.headers["Content-Type"] = "text/plain"
-    response.headers["Cache-Control"] = "public, max-age=86400"  # Cache for 24 hours
-    return response
+    return send_file('robots.txt')
 
 @app.route('/sitemap.xml')
 def sitemap():
-    response = make_response(send_file('sitemap.xml'))
-    response.headers["Content-Type"] = "application/xml"
-    response.headers["Cache-Control"] = "public, max-age=86400"  # Cache for 24 hours
-    return response
+    return send_file('sitemap.xml')
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
+@app.route('/static/images/og-image.png')
+def social_preview():
+    # Check if the image already exists
+    image_path = os.path.join('static', 'images', 'og-image.png')
+    if os.path.exists(image_path):
+        return send_file(image_path, mimetype='image/png')
+    
+    # If image doesn't exist, return a default image or generate one
+    # For now, we'll use a static file
+    return send_file('static/images/og-image.png', mimetype='image/png')
 
 if __name__ == '__main__':
     app.debug = False  # Disable debug mode in production
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run()

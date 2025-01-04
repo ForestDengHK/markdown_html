@@ -1,58 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Primary Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Markdown Converter - Convert Documents to Markdown{% endblock %}</title>
-    <meta name="title" content="{% block meta_title %}Markdown Converter - Convert Documents to Markdown{% endblock %}">
-    <meta name="description" content="{% block meta_description %}Free online tool to convert various document formats to Markdown. Support for Word, PDF, and other formats.{% endblock %}">
-    <meta name="keywords" content="markdown converter, document conversion, markdown, word to markdown, pdf to markdown">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.url }}">
-    <meta property="og:title" content="{% block og_title %}Markdown Converter - Convert Documents to Markdown{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Free online tool to convert various document formats to Markdown. Support for Word, PDF, and other formats.{% endblock %}">
-    <meta property="og:image" content="{{ url_for('static', filename='img/og-image.png', _external=True) }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ request.url }}">
-    <meta property="twitter:title" content="{% block twitter_title %}Markdown Converter - Convert Documents to Markdown{% endblock %}">
-    <meta property="twitter:description" content="{% block twitter_description %}Free online tool to convert various document formats to Markdown. Support for Word, PDF, and other formats.{% endblock %}">
-    <meta property="twitter:image" content="{{ url_for('static', filename='img/og-image.png', _external=True) }}">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="{{ request.url }}">
-
-    <!-- Favicon -->
+    <title>Markdown Converter</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- JSON-LD Schema -->
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Convert your documents to Markdown format easily. Free online converter supporting multiple file formats.">
+    <meta name="keywords" content="markdown converter, document conversion, file converter, online converter, markdown, html to markdown">
+    <meta name="author" content="Forest Deng">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}Markdown Converter - Free Online Document Conversion{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Convert your documents to Markdown format easily. Free online converter supporting multiple file formats.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Markdown Converter">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Markdown Converter - Convert your documents to Markdown format">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Markdown Converter - Free Online Document Conversion{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Convert your documents to Markdown format easily. Free online converter supporting multiple file formats.{% endblock %}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/twitter-image.png', _external=True) }}">
+    <meta name="twitter:image:alt" content="Markdown Converter - Convert your documents to Markdown format">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.url }}" />
+    
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Markdown Converter",
-        "description": "Free online tool to convert various document formats to Markdown",
-        "url": "{{ request.url_root }}",
-        "applicationCategory": "DocumentConversion",
+        "description": "Free online document to Markdown converter",
+        "url": "{{ request.url }}",
+        "applicationCategory": "Utility",
         "operatingSystem": "All",
         "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD"
-        }
+        },
+        "featureList": [
+            "Multiple file format support",
+            "Batch conversion",
+            "Free to use",
+            "No registration required"
+        ]
     }
     </script>
 </head>
