@@ -21,6 +21,9 @@ logger = logging.getLogger(__name__)
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
+# For Vercel deployment
+app.debug = False
+
 def convert_file(file_obj, filename):
     """Convert a file to markdown with proper error handling."""
     temp_path = None
