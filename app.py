@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, send_from_directory, make_response
 import io
 import zipfile
 from markitdown import MarkItDown
@@ -142,6 +142,24 @@ def updates():
 def about():
     return render_template('about.html', active_page='about')
 
+@app.route('/robots.txt')
+def robots():
+    response = make_response(send_file('robots.txt'))
+    response.headers["Content-Type"] = "text/plain"
+    response.headers["Cache-Control"] = "public, max-age=86400"  # Cache for 24 hours
+    return response
+
+@app.route('/sitemap.xml')
+def sitemap():
+    response = make_response(send_file('sitemap.xml'))
+    response.headers["Content-Type"] = "application/xml"
+    response.headers["Cache-Control"] = "public, max-age=86400"  # Cache for 24 hours
+    return response
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
+
 if __name__ == '__main__':
     app.debug = False  # Disable debug mode in production
-    app.run()
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

@@ -1,0 +1,17 @@
+# Markdown Converter - robots.txt
+# https://mdconvert.swifttools.eu
+
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /updates
+Allow: /donate
+Disallow: /convert
+Disallow: /tmp/
+Disallow: /static/
+Disallow: /*.json$
+Disallow: /*?*
+Disallow: /uploads/
+
+# Sitemap
+Sitemap: https://mdconvert.swifttools.eu/sitemap.xml 
