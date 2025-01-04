@@ -1,11 +1,5 @@
 name = "markdown-converter"
-type = "webpack"
-account_id = "" # You'll fill this in from Cloudflare
-workers_dev = true
-route = ""
-zone_id = "" # You'll fill this in from Cloudflare
 compatibility_date = "2024-01-04"
 
 [site]
-bucket = "./static"
-entry-point = "workers-site" 
+bucket = "./static" 
