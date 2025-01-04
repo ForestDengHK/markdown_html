@@ -23,8 +23,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Ensure upload folder exists
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+@app.before_request
+def setup_upload_folder():
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
 
 def convert_file(file_obj, filename):
     """Convert a file to markdown with proper error handling."""
