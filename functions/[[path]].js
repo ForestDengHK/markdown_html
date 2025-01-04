@@ -1,37 +1,21 @@
+import handler from './index.py';
+
 export async function onRequest(context) {
-  const { request, env } = context;
+  const { request } = context;
   
   try {
-    // First try to serve static assets
-    const url = new URL(request.url);
-    const path = url.pathname;
+    // Call the Python handler
+    const response = await handler(request);
     
-    // Try to serve from static assets first
-    try {
-      const asset = await env.ASSETS.fetch(request);
-      if (asset.status !== 404) {
-        return asset;
-      }
-    } catch (e) {
-      // Continue to dynamic handling if static asset not found
-    }
-
-    // For dynamic routes, return the index.html
-    if (!path.startsWith('/static/') && !path.endsWith('.ico')) {
-      const response = await env.ASSETS.fetch(`${url.origin}/index.html`);
-      return new Response(response.body, {
-        headers: {
-          'content-type': 'text/html;charset=UTF-8',
-        },
-      });
-    }
-
-    // If nothing matched, return 404
-    return new Response('Not Found', { status: 404 });
+    // Return the response
+    return new Response(response.body, {
+      status: response.statusCode,
+      headers: response.headers
+    });
   } catch (err) {
-    return new Response(`Internal Server Error: ${err.message}`, { 
+    return new Response(`Error: ${err.message}`, { 
       status: 500,
-      headers: { 'content-type': 'text/plain' }
+      headers: { 'Content-Type': 'text/plain' }
     });
   }
 } 
