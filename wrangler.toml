@@ -1,22 +1,11 @@
 name = "markdown-converter"
 compatibility_date = "2024-01-01"
-workers_dev = true
 
 [build]
-command = "pip install -r requirements.txt && python app.py"
-build_output_directory = "static"
-publish_directory = "static"
+command = "pip install -r requirements.txt"
 
 [site]
 bucket = "static"
 
 [env.production]
-name = "markdown-converter"
-
-[build.upload]
-format = "service-worker"
-
-[[rules]]
-type = "Data"
-globs = ["**/*.md"]
-fallthrough = true 
+name = "markdown-converter" 
