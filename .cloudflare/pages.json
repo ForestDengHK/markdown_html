@@ -1,8 +1,0 @@
-{
-  "buildConfig": {
-    "buildCommand": "pip install -r requirements.txt",
-    "buildOutputDirectory": "/",
-    "rootDirectory": "/"
-  },
-  "deploymentStrategy": "pages-functions"
-} 
