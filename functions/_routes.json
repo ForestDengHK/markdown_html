@@ -3,9 +3,9 @@
   "include": ["/*"],
   "exclude": ["/static/*", "/favicon.ico"],
   "handlers": {
-    "handler": {
-      "path": "handler.py",
-      "method": ["GET", "POST"]
+    "catchall": {
+      "path": "[...path].py",
+      "method": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
     }
   }
 } 
