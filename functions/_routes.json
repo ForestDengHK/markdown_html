@@ -1,5 +1,11 @@
 {
   "version": 1,
   "include": ["/*"],
-  "exclude": []
+  "exclude": ["/static/*", "/favicon.ico"],
+  "handlers": {
+    "handler": {
+      "path": "handler.py",
+      "method": ["GET", "POST"]
+    }
+  }
 } 

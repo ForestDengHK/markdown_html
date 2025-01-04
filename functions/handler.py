@@ -1,13 +1,12 @@
 from flask import Flask, Request
 from app import app as flask_app
 
-def onRequest(context):
+def handle(request, context):
     """
     Handle incoming request and route to Flask application
     """
     try:
         # Get request data
-        request = context.get('request', {})
         method = request.get('method', 'GET')
         headers = dict(request.get('headers', {}))
         url = request.get('url', '')
