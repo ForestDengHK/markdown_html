@@ -3,7 +3,7 @@ from app import app as flask_app
 
 def onRequest(context):
     """
-    Handle incoming request
+    Handle incoming request and route to Flask application
     """
     try:
         # Get request data
@@ -25,7 +25,6 @@ def onRequest(context):
         with flask_app.request_context(flask_request):
             response = flask_app.full_dispatch_request()
             
-            # Convert Flask response to Cloudflare response
             return {
                 'statusCode': response.status_code,
                 'headers': dict(response.headers),
@@ -35,5 +34,6 @@ def onRequest(context):
     except Exception as e:
         return {
             'statusCode': 500,
-            'body': str(e)
+            'headers': {'Content-Type': 'text/plain'},
+            'body': f'Internal Server Error: {str(e)}'
         } 
