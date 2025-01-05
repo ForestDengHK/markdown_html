@@ -3,7 +3,7 @@
 {% block page_title %}Convert Files{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto" x-data="{ 
+<div class="max-w-3xl mx-auto relative z-0" x-data="{ 
     dragOver: false,
     files: [],
     fileInput: null,
@@ -44,11 +44,8 @@
         this.updateFileInput();
     },
     updateFileInput() {
-        // Create a new DataTransfer object
         const dataTransfer = new DataTransfer();
-        // Add all files to it
         this.files.forEach(file => dataTransfer.items.add(file));
-        // Set the file input's files
         this.fileInput.files = dataTransfer.files;
     }
 }">

@@ -66,12 +66,12 @@
 <body class="bg-gray-50">
     <div class="min-h-screen flex" x-data="{ sidebarOpen: true }">
         <!-- Sidebar -->
-        <div class="bg-white shadow-lg w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out" 
+        <div class="bg-white shadow-lg w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out z-50" 
              :class="{'translate-x-0 ease-out': sidebarOpen, '-translate-x-full ease-in': !sidebarOpen}">
             
             <!-- Logo -->
             <div class="flex items-center justify-between px-4">
-                <span class="text-2xl font-semibold text-gray-800">MD Convert</span>
+                <span class="text-2xl font-semibold text-gray-800">Markdown Convert</span>
                 <button class="md:hidden" @click="sidebarOpen = false">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -116,9 +116,9 @@
         </div>
 
         <!-- Content -->
-        <div class="flex-1">
+        <div class="flex-1 relative">
             <!-- Top bar -->
-            <div class="bg-white shadow-sm">
+            <div class="bg-white shadow-sm sticky top-0 z-40">
                 <div class="flex items-center justify-between h-16 px-4">
                     <button class="md:hidden" @click="sidebarOpen = true">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +133,7 @@
             </div>
 
             <!-- Main content -->
-            <main class="p-6">
+            <main class="p-6 relative z-0">
                 {% block content %}{% endblock %}
             </main>
         </div>
